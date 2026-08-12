@@ -1,0 +1,33 @@
+name: certosec
+description: "CertoSec V2 - Blockchain-based certificate verification system frontend."
+publish_to: 'none'
+version: 2.0.0+1
+
+environment:
+  sdk: ^3.10.8
+
+dependencies:
+  barcode: ^2.2.9
+  cached_network_image: ^3.4.1
+  crypto: ^3.0.7
+  file_picker: ^11.0.3
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^9.2.4
+  go_router: ^17.5.0
+  http: ^1.6.0
+  image_picker: ^1.2.3
+  intl: ^0.20.3
+  mobile_scanner: ^7.4.0
+  pdf: ^3.12.0
+  printing: ^5.14.3
+  provider: ^6.1.5+1
+  qr_flutter: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

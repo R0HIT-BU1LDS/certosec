@@ -1,0 +1,47 @@
+{
+  "name": "certosec-backend",
+  "version": "2.0.0",
+  "description": "CertoSec V2 backend - blockchain-based certificate verification (Express + Supabase + Polygon Amoy)",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "check:env": "node -e \"require('./src/config/env')\""
+  },
+  "keywords": [
+    "certosec",
+    "certificates",
+    "blockchain",
+    "supabase",
+    "polygon",
+    "verification"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "express-validator": "^7.2.0",
+    "helmet": "^7.1.0",
+    "jose": "^5.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.2",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
+  }
+}
