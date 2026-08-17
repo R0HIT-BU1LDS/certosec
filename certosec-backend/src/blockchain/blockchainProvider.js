@@ -61,4 +61,13 @@ function toBytes32(value) {
   return encodeBytes32String(value);
 }
 
-module.exports = { getProvider, getSigner, getContract, toBytes32, reset };
+/** Converts a 64-char hex SHA-256 digest into its raw bytes32 value. */
+function toHashBytes32(hash) {
+  const clean = String(hash).replace(/^0x/, '').toLowerCase();
+  if (!/^[0-9a-f]{64}$/.test(clean)) {
+    throw new ApiError(500, 'INVALID_HASH', 'The certificate hash is not a valid SHA-256 digest.');
+  }
+  return `0x${clean}`;
+}
+
+module.exports = { getProvider, getSigner, getContract, toBytes32, toHashBytes32, reset };

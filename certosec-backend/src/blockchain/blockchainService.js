@@ -1,4 +1,4 @@
-const { getContract, getSigner, getProvider, toBytes32 } = require('./blockchainProvider');
+const { getContract, getSigner, getProvider, toBytes32, toHashBytes32 } = require('./blockchainProvider');
 const env = require('../config/env');
 const logger = require('../utils/logger');
 
@@ -6,23 +6,23 @@ const logger = require('../utils/logger');
  * BlockchainService — every on-chain interaction for certificates goes through
  * here. Express controllers never talk to ethers directly.
  *
- * The bundled contractABI.json describes the expected CertoSec interface:
+ * The bundled contractABI.json matches the deployed CertoSecRegistry:
  *   issueCertificate(bytes32 uid, bytes32 hash)
  *   getCertificate(bytes32 uid) -> (bytes32 uid, bytes32 hash, address issuer,
  *                                    uint256 issuedAt, bool exists)
  *   isIssued(bytes32 uid) -> bool
  *   verifyCertificate(bytes32 uid, bytes32 hash) -> bool
  *
- * IMPORTANT: replace contractABI.json with the ABI from your Remix-deployed
- * contract (and set CONTRACT_ADDRESS) before live issuance. The contract must
- * expose the functions above, otherwise these calls will revert.
+ * Encoding: `uid` is passed as UTF-8 bytes32 (encodeBytes32String); `hash` is
+ * the RAW SHA-256 digest as bytes32 (0x + 64 hex), because the hash service
+ * returns a lowercase hex digest and the on-chain comparison is byte-for-byte.
  */
 async function issueCertificate({ uid, hash }) {
   const contract = getContract();
   const signer = getSigner();
   const provider = getProvider();
 
-  const tx = await contract.issueCertificate(toBytes32(uid), toBytes32(hash));
+  const tx = await contract.issueCertificate(toBytes32(uid), toHashBytes32(hash));
   logger.info('Certificate issuance tx submitted', {
     uid,
     txHash: tx.hash,
@@ -63,7 +63,7 @@ async function isIssued(uid) {
 /** On-chain comparison of the stored hash against the canonical hash. */
 async function verifyCertificate(uid, hash) {
   const contract = getContract();
-  return Boolean(await contract.verifyCertificate(toBytes32(uid), toBytes32(hash)));
+  return Boolean(await contract.verifyCertificate(toBytes32(uid), toHashBytes32(hash)));
 }
 
 /** Returns the raw transaction, or null when it does not exist on-chain. */
