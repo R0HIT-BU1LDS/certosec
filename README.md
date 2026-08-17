@@ -436,7 +436,7 @@ external services. Covers:
 | Audit trail | Done |
 | Flutter app (mobile + web) | Done |
 | CI / CD pipeline | Planned |
-| Production deployment (Polygon mainnet) | Planned |
+| Production deployment (Polygon mainnet) | Not-Planned |
 
 ---
 
